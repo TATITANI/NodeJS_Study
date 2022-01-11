@@ -13,5 +13,5 @@ const validator = require("validator");
 console.log(validator.isEmail("woong@g.com"));
 
 const chalk = require("chalk");
-const greenMsg = chalk.green.bold("green txt");
+const greenMsg = chalk.green.inverse.bold("green txt");
 console.log(greenMsg);
