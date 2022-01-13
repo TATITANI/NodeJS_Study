@@ -1,6 +1,8 @@
 const chalk = require("chalk");
 const getNotes = require("./notes.js");
 const yargs = require("yargs"); // command line의 옵션 인수를 파싱하는 package
+const notes = require("./notes.js");
+const { argv } = require("yargs");
 
 // console.log(process.argv);
 
@@ -24,8 +26,7 @@ yargs.command({
     },
   },
   handler: function (argv) {
-    console.log("Title : " + argv.title);
-    console.log("Body : " + argv.body);
+    notes.addNote(argv.title, argv.body);
   },
 });
 
@@ -33,26 +34,40 @@ yargs.command({
 yargs.command({
   command: "remove",
   describe: "remove  a new note",
+  builder: {
+    title: {
+      describe: "Note Title",
+      demandOption: true,
+      type: "string",
+    },
+  },
   handler: function () {
-    console.log("Removing a new note!");
+    notes.removeNote(argv.title);
   },
 });
 
 // Create list command
 yargs.command({
-  command: "List",
-  describe: "List  a new note",
+  command: "list",
+  describe: "list  a new note",
   handler: function () {
-    console.log("Listing a new note!");
+    notes.listNotes();
   },
 });
 
 // Create list command
 yargs.command({
-  command: "Read",
-  describe: "Read  a new note",
+  command: "read",
+  describe: "read  a new note",
+  builder: {
+    title: {
+      describe: "note title",
+      demandOption: true,
+      type: "string",
+    },
+  },
   handler: function () {
-    console.log("Reading a new note!");
+    notes.readNotes(argv.title);
   },
 });
 
