@@ -11,6 +11,9 @@ const addNote = function (title, body) {
   const notes = loadNotes();
   const duplicateNote = notes.find((n) => n.title == title);
 
+  //node inspect app.js add --title='t' --body=='b'
+  debugger;
+
   if (!duplicateNote) {
     notes.push({
       title: title,
