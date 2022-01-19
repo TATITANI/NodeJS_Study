@@ -1,20 +1,6 @@
 const request = require("request");
 const stringModule = require("./stringModule");
 
-const weatherURL =
-  "http://api.weatherstack.com/current?access_key=6228ba0dbd289b5b20d8355c5c1b8d1d&query=33.348885,126.280975";
-
-request(weatherURL, (error, response, body) => {
-  if (error) {
-    console.log("weather connect failed");
-  } else if (body.error) {
-    console.log("unable to find weather");
-  } else {
-    const data = JSON.parse(body);
-    console.log("현재 온도 : {0} 도".format(data.current.temperature));
-  }
-});
-
 const geoCode = (address, callback) => {
   const geoCodeURL =
     "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
