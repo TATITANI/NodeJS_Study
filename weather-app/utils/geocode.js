@@ -7,7 +7,7 @@ const geoCode = (address, weather) => {
     encodeURIComponent(address) +
     ".json?types=country&access_token=pk.eyJ1IjoiY2hlZXZlcjExNiIsImEiOiJja3lrZ3BwbzIxbGo5Mm5uODM5djNxc3F6In0.Za4fsE-_dSoHlMqIeWlt_Q";
 
-  request({ url: geoCodeURL, json: true }, (error, response, body) => {
+  request({ url: geoCodeURL, json: true }, (error, { body }) => {
     if (error) {
       console.log("weather connect failed");
     } else if (body.features.length == 0) {
