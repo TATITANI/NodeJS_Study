@@ -1,7 +1,7 @@
 const request = require("request");
 const stringModule = require("./stringModule");
 
-const geoCode = (address, callback) => {
+const geoCode = (address, weather) => {
   const geoCodeURL =
     "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
     encodeURIComponent(address) +
@@ -9,15 +9,14 @@ const geoCode = (address, callback) => {
 
   request({ url: geoCodeURL, json: true }, (error, response, body) => {
     if (error) {
-      callback("weather connect failed", undefined);
+      console.log("weather connect failed");
     } else if (body.features.length == 0) {
-      callback("unable to find weather", undefined);
+      console.log("unable to find weather");
     } else {
-      callback(undefined, {
-        longitude: body.features[0].center[0],
-        latitude: body.features[0].center[1],
-        location: body.features[0].place_name,
-      });
+      longitude = body.features[0].center[0];
+      latitude = body.features[0].center[1];
+      location = body.features[0].place_name;
+      weather(location, latitude, longitude);
     }
   });
 };
