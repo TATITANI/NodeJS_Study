@@ -1,7 +1,8 @@
 const path = require("path")
 const express = require("express")
 const hbs = require("hbs")
-const { mainModule } = require("process")
+const geoCode = require("./utils/geocode")
+const weather = require("./utils/weather")
 
 const app = express()
 
@@ -38,10 +39,49 @@ app.get("/about", (req, res) => {
 })
 
 app.get("/weather", (req, res) => {
-  res.render("index", {
-    forecast: "It is snowing",
-    location: "mulgeum",
-    name: "woong_weather",
+  if (!req.query.address) {
+    return res.send({
+      error: "You must provide a address item",
+    })
+  }
+
+  geoCode(req.query.address)
+  // NOTE: 화살표 함수 대괄호를 적지 않으면 return처리됨. 
+  // 대괄호치면 return weather~로 작성.
+  .then( ( ...data) => 
+    weather(...data)
+  )
+  .then(temperature => {
+    res.send({
+      forecast: "It is snowing",
+      address: req.query.address,
+      title: "Weather",
+      name: "woong",
+      temperature : temperature,
+    })
+  })
+  .catch((err) => res.send({
+    error : err
+  }))
+  
+  // res.render("index", {
+  //   forecast: "It is snowing",
+  //   location: "mulgeum",
+  //   address: req.query.address,
+  //   title: "Weather",
+  //   name: "woong",
+  // })
+})
+
+app.get("/products", (req, res) => {
+  if (!req.query.search) {
+    return res.send({
+      error: "You must provide a search item",
+    })
+  }
+  console.log(req.query)
+  res.send({
+    products: [],
   })
 })
 
@@ -68,4 +108,4 @@ app.listen(3000, () => {
   console.log("Server is up on port 3000.")
 })
 
-// 터미널 명령어 : nodemon src/app.js js, hbs
+// 터미널 실행 명령어 : nodemon src/app.js js, hbs

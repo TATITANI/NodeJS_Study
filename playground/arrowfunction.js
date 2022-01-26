@@ -1,3 +1,4 @@
+// 객체 리터럴
 const Test = {
   name: "woong",
   Test() {},
@@ -9,5 +10,5 @@ const Test = {
   },
 };
 
-t.print(); //
-t.printByAF(); // 바인딩이 printbyAF로 돼서 에러
+Test.print()
+Test.printByAF(); // 바인딩이 printbyAF로 돼서 에러
