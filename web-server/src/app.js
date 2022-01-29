@@ -46,24 +46,24 @@ app.get("/weather", (req, res) => {
   }
 
   geoCode(req.query.address)
-  // NOTE: 화살표 함수 대괄호를 적지 않으면 return처리됨. 
-  // 대괄호치면 return weather~로 작성.
-  .then( ( ...data) => 
-    weather(...data)
-  )
-  .then(temperature => {
-    res.send({
-      forecast: "It is snowing",
-      address: req.query.address,
-      title: "Weather",
-      name: "woong",
-      temperature : temperature,
+    // NOTE: 화살표 함수 대괄호를 적지 않으면 return처리됨.
+    // 대괄호치면 return weather~로 작성.
+    .then((...data) => weather(...data))
+    .then((temperature) => {
+      res.send({
+        forecast: "It is snowing",
+        address: req.query.address,
+        title: "Weather",
+        name: "woong",
+        temperature: temperature,
+      })
     })
-  })
-  .catch((err) => res.send({
-    error : err
-  }))
-  
+    .catch((err) =>
+      res.send({
+        error: err,
+      })
+    )
+
   // res.render("index", {
   //   forecast: "It is snowing",
   //   location: "mulgeum",
