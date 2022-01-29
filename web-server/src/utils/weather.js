@@ -13,7 +13,6 @@ const weather = ([location, lat, long]) => {
         reject("unable to find weather")
       } else {
         const data = JSON.parse(body)
-        console.log('온도 : ' , data.current.temperature)
         resolve(data.current.temperature)
         // resolve("{0}의 현재 온도 : {1} 도".format(location, data.current.temperature))
       }
