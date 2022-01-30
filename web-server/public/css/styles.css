@@ -41,3 +41,19 @@ header a {
 .portrait {
   width: 250px;
 }
+
+input {
+  border : 3px solid #2fa0bd;
+  padding: 10px
+}
+
+button {
+  cursor: pointer;  /* 올렸을 때 커서 모양 */
+  border : 3px solid #c0742d;
+  background: #befac1;
+  color: white; /* 글씨 색상 */
+  padding: 10px;
+}
+
+
+

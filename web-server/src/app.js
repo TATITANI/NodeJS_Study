@@ -51,7 +51,6 @@ app.get("/weather", (req, res) => {
     .then((...data) => weather(...data))
     .then((temperature) => {
       res.send({
-        forecast: "It is snowing",
         address: req.query.address,
         title: "Weather",
         name: "woong",
@@ -65,7 +64,6 @@ app.get("/weather", (req, res) => {
     )
 
   // res.render("index", {
-  //   forecast: "It is snowing",
   //   location: "mulgeum",
   //   address: req.query.address,
   //   title: "Weather",
