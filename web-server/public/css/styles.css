@@ -55,5 +55,11 @@ button {
   padding: 10px;
 }
 
+#geocoder {
+  z-index: 1;
+  margin: 20px;
+}
 
-
+.mapboxgl-ctrl-geocoder {
+  min-width: 100%;
+}

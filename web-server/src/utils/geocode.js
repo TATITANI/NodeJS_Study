@@ -1,7 +1,7 @@
 const request = require("request")
 const stringModule = require("./stringModule")
 
-const geoCode = (address) => {
+geoCode = (address) => {
   return new Promise((resolve, reject) => {
     const geoCodeURL =
       "https://api.mapbox.com/geocoding/v5/mapbox.places/" +

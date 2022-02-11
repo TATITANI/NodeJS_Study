@@ -1,15 +1,15 @@
 const path = require("path")
 const express = require("express")
 const hbs = require("hbs")
-const geoCode = require("./utils/geocode")
-const weather = require("./utils/weather")
-
-const app = express()
+const bodyParser = require('body-parser')
+const weather = require('./utils/weather')
 
 //define paths for Express config
 const publicDirectoryPath = path.join(__dirname, "../public")
 const viewPath = path.join(__dirname, "../templates/views")
 const partialPath = path.join(__dirname, "../templates/partials")
+
+const app = express()
 
 console.log(__dirname)
 console.log(publicDirectoryPath)
@@ -20,7 +20,12 @@ app.set("views", viewPath)
 // 템플릿 재사용
 hbs.registerPartials(partialPath)
 
+// body-parser : post의 req.body 데이터를 파싱하여 사용할 수 있게 함
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json())
+
 // Setup static directory to serve
+// static 미들웨어는 특정 디렉토리 아래에 있는 폴더와 파일들을 특정 경로로 접근할 수 있도록 만들어준다.
 app.use(express.static(publicDirectoryPath))
 
 app.get("", (req, res) => {
@@ -28,7 +33,21 @@ app.get("", (req, res) => {
     title: "Weather App",
     name: "woong",
   })
+  console.log('get : ', req.query)
 })
+
+app.post("", (req,res)=>{
+  const postData = req.body
+  weather.GetWeather(postData.address, postData.lat, postData.long)
+  .then((weatherData) =>{
+    console.log('post weatherData : ', weatherData)
+    res.send(weatherData)
+  })
+  .catch((result) =>{
+    console.log('post error : ', result)
+  })
+})
+
 
 app.get("/about", (req, res) => {
   res.render("about", {
@@ -44,31 +63,7 @@ app.get("/weather", (req, res) => {
       error: "You must provide a address item",
     })
   }
-
-  geoCode(req.query.address)
-    // NOTE: 화살표 함수 대괄호를 적지 않으면 return처리됨.
-    // 대괄호치면 return weather~로 작성.
-    .then((...data) => weather(...data))
-    .then((temperature) => {
-      res.send({
-        address: req.query.address,
-        title: "Weather",
-        name: "woong",
-        temperature: temperature,
-      })
-    })
-    .catch((err) =>
-      res.send({
-        error: err,
-      })
-    )
-
-  // res.render("index", {
-  //   location: "mulgeum",
-  //   address: req.query.address,
-  //   title: "Weather",
-  //   name: "woong",
-  // })
+ 
 })
 
 app.get("/products", (req, res) => {
@@ -106,4 +101,4 @@ app.listen(3000, () => {
   console.log("Server is up on port 3000.")
 })
 
-// 터미널 실행 명령어 : nodemon src/app.js js, hbs
+// 터미널 실행 명령어 : nodemon src/main.js js, hbs
