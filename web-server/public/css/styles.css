@@ -63,3 +63,9 @@ button {
 .mapboxgl-ctrl-geocoder {
   min-width: 100%;
 }
+
+#msg-weather{
+  width: 1000px;
+  height: 100px;
+  /* margin-top : 100px; */
+}
