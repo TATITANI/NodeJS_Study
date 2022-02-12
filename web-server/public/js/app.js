@@ -1,12 +1,12 @@
-console.log("Client side javascript file is loaded!")
+// import dd  from '../js/utils/stringModule.js'
 
 const weatherForm = document.querySelector("form")
 const search = document.querySelector("input")
 
-const messageOne = document.getElementById("message-1")
-const messageTwo = document.getElementById("message-2")
-messageOne.textContent = "..."
-messageTwo.textContent = "Using NodeJS"
+const messageWeather = document.getElementById("msg-weather")
+const messageInfo = document.getElementById("msg-info")
+messageWeather.textContent = "..."
+messageInfo.textContent = "Using NodeJS"
 const results = document.getElementById('result');
 var xhr = new XMLHttpRequest()
 
@@ -49,7 +49,7 @@ geocoder.on("result", (e) => {
     const weatherData = JSON.parse(xhr.responseText)
     console.log('receive weatherData ', weatherData)
 
-    messageOne.textContent = `위치 : ${weatherData.address} / 온도 : ${weatherData.temperature}도`
+    messageWeather.textContent = `위치 : ${weatherData.address} / 온도 : ${weatherData.temperature}도`
   })
 
 })
@@ -57,5 +57,5 @@ geocoder.on("result", (e) => {
 
 // Clear results container when search is cleared.
 geocoder.on("clear", () => {
-  messageOne.textContent.innerText = 'loading';
+  messageWeather.textContent.innerText = 'loading';
 })

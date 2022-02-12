@@ -2,7 +2,6 @@
 // const stringModule = require("./stringModule")
 
 const request = require("request")
-const stringModule = require("./stringModule")
 
 const RequestWeather = (address, lat, long) => {
   return new Promise((resolve, reject) => {
@@ -17,7 +16,7 @@ const RequestWeather = (address, lat, long) => {
       } else {
         const data = JSON.parse(body)
         resolve(data.current.temperature)
-        console.log("{0}의 현재 온도 : {1} 도".format(address, data.current.temperature))
+        console.log(`${address}의 현재 온도 : ${data.current.temperature} 도`)
       }
     })
   })

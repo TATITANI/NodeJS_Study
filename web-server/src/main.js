@@ -2,7 +2,7 @@ const path = require("path")
 const express = require("express")
 const hbs = require("hbs")
 const bodyParser = require('body-parser')
-const weather = require('./utils/weather')
+const weather = require('../public/js/utils/weather')
 
 //define paths for Express config
 const publicDirectoryPath = path.join(__dirname, "../public")
