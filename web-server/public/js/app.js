@@ -32,7 +32,8 @@ geocoder.on("result", (e) => {
     lat : lat,
     long : long
   }
-  xhr.open("POST", "http://localhost:3000/")
+  // xhr.open("POST", "http://localhost:3000/")
+  xhr.open("POST", "/")
   xhr.setRequestHeader("Content-type", "application/json") // 콘텐츠 타입을 json으로
   // 'application/x-www-form-urlencoded' : &으로 분리되고, "=" 기호로 값과 키를 연결하는 key-value tuple로 인코딩되는 값
   xhr.send(JSON.stringify(data)) // 데이터 전송
