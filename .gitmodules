@@ -1,0 +1,3 @@
+[submodule "weather-server"]
+	path = weather-server
+	url = https://github.com/SCW96/weather-server
