@@ -26,7 +26,7 @@ hbs.registerPartials(partialPath)
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json())
 
-// Setup static directory to server
+// Setup static directory to server  
 // static 미들웨어는 특정 디렉토리 아래에 있는 폴더와 파일들을 특정 경로로 접근할 수 있도록 만들어준다.
 app.use(express.static(publicDirectoryPath))
 
