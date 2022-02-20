@@ -23,7 +23,7 @@ const RequestWeather = (address, lat, long) => {
 }
 
 function GetWeather(address, lat, long) {
-  // NOTE: 화살표 함수 대괄호를 적지 않으면 return처리됨.
+  // NOTE: 화살표 함수 중괄호를 적지 않으면 return처리됨.
   // 대괄호치면 return func~로 작성.
   return new Promise((resolve, reject) => {
     RequestWeather(address, lat, long)

@@ -23,19 +23,42 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
   }
 
   const db = client.db(databaseName)
-  db.collection("users").findOne({ _id : new  ObjectId("6211253763e782534f11dcb6") }, (error, user) => {
-    if(error){
-      console.log('Unable to fetch')
-    }
-   
-    console.log(user)
-  })
+
+
+ const updatePromise = db.collection("users").updateOne(
+   { _id: new ObjectId("6211253763e782534f11dcb6") },
+   {
+     // 제한자
+     // $set : 오직 하나의 필드만 변경하고 나머지 값은 유지
+     $set: {
+       name: "wowow2",
+     },
+     // 더하기
+     $inc: {
+       age : 10
+     }
+   }
+ )
+
+ updatePromise.then( (result) => {
+   console.log(result)
+ }).catch( (err)=>{
+   console.log(err)
+ })
+ 
+
+  // db.collection("users").findOne({ _id : new  ObjectId("6211253763e782534f11dcb6") }, (error, user) => {
+  //   if(error){
+  //     console.log('Unable to fetch')
+  //   }
+  //   console.log(user)
+  // })
   
-  const cursor = db.collection('users').find() //  커서(Cursor)는 일련의 데이터에 순차적으로 액세스할 때 검색 및 "현재 위치"를 포함하는 데이터 요소이다
-  cursor.forEach(d => console.log(d.name)) 
-  db.collection('users').find().toArray((error, users) => {
-    console.log(users)
-  })
+  // const cursor = db.collection('users').find() //  커서(Cursor)는 일련의 데이터에 순차적으로 액세스할 때 검색 및 "현재 위치"를 포함하는 데이터 요소이다
+  // cursor.forEach(d => console.log(d.name)) 
+  // db.collection('users').find().toArray((error, users) => {
+  //   console.log(users)
+  // })
 
 
   // db.collection(`users`).insertMany(
@@ -57,4 +80,4 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
   //   }
   // ) 
 
-})
+  })
