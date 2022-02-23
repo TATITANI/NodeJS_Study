@@ -40,6 +40,14 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
    }
  )
 
+ db.collection('users').deleteMany({
+   'name' : 'wowow2'
+ }).then( (result) => {
+   console.log("delete result : " , result)
+ }).catch( (err)=>{
+   console.log('err : ', err)
+ })
+
  updatePromise.then( (result) => {
    console.log(result)
  }).catch( (err)=>{
