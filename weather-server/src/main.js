@@ -10,8 +10,8 @@ const viewPath = path.join(__dirname, "../templates/views")
 const partialPath = path.join(__dirname, "../templates/partials")
 
 const app = express()
-// evn : 환경변수
-const port = process.env.PORT || 3000
+// env : 환경변수
+const port = process.env.PORT || 3000 // 포트가 없다면 3000 사용
 
 console.log(__dirname)
 console.log(publicDirectoryPath)
@@ -28,10 +28,12 @@ app.use(bodyParser.json())
 
 // Setup static directory to server  
 // static 미들웨어는 특정 디렉토리 아래에 있는 폴더와 파일들을 특정 경로로 접근할 수 있도록 만들어준다.
+// => partial 사용 가능
 app.use(express.static(publicDirectoryPath))
 
 app.get("", (req, res) => {
-  res.render("index", {
+  //render 1번째 인자 : views경로에서 사용할 hbs 파일명
+  res.render("main", {
     title: "Weather App",
     name: "woong",
   })
@@ -41,7 +43,7 @@ app.get("", (req, res) => {
 app.post("", (req,res)=>{
   const postData = req.body
   weather.GetWeather(postData.address, postData.lat, postData.long)
-  .then((weatherData) =>{
+  .then((weatherData) =>{1
     console.log('post weatherData : ', weatherData)
     res.send(weatherData)
   })
