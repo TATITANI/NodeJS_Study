@@ -18,7 +18,6 @@ const geocoder = new MapboxGeocoder({
 
 geocoder.addTo("#geocoder")
 
-
 // Add geocoder result to container.
 geocoder.on("result", (e) => {
 

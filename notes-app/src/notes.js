@@ -71,11 +71,13 @@ const readNotes = (title) => {
     console.length(chalk.red.inverse("Note not found!"));
   }
 };
-// module.exports = name;
+
 module.exports = {
   getNotes: getNotes,
   addNote: addNote,
   removeNote: removeNote,
   listNotes: listNotes,
   readNotes: readNotes,
+  a : 3,
+  b : 2
 };

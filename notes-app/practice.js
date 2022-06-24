@@ -4,7 +4,8 @@
 // fs.writeFileSync(filePath, `This file was created by NodeJS`);
 // fs.appendFileSync(filePath, `추가 내용222'`);
 
-const add = require("./notes.js");
+const add = require("./src/notes.js");
+// const add = import("./notes.js");
 const sum = add(1, 3);
 console.log(sum);
 

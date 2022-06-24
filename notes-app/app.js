@@ -1,7 +1,6 @@
 const chalk = require("chalk");
-const getNotes = require("./notes.js");
 const yargs = require("yargs"); // command line의 옵션 인수를 파싱하는 package
-const notes = require("./notes.js");
+const notes = require("./src/notes.js");
 const { argv } = require("yargs");
 
 // console.log(process.argv);
@@ -72,4 +71,9 @@ yargs.command({
 });
 
 // console.log(yargs.argv);
-yargs.parse();
+ yargs.parse();
+
+//  console.log(`a : ${notes.a}, b : ${notes.b} `)
+//  console.log(`a : ${a}, b : ${b}`)
+ console.log(`c : ${notes.c}`)
+ console.log(`b : ${notes.b}`)

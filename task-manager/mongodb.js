@@ -1,4 +1,4 @@
-// MongoDB 실행 :  /Users/cheev/Documents/mongodb/bin/mongod.exe --dbpath=/Users/cheev/Documents/mongodb-data
+// MongoDB 실행 :  D:/mongodb/bin/mongod.exe --dbpath=D:/mongodb-data
 
 // todo :  CRUD 구현
 
