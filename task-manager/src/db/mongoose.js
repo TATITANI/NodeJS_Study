@@ -1,8 +1,5 @@
+const { MongoDBNamespace } = require('mongodb');
 const mongoose = require('mongoose');
-
-
-// mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
-  
 
 mongoose.connect("mongodb://127.0.0.1:27017/task-manager", {
   useNewUrlParser: true,
@@ -15,9 +12,11 @@ mongoose.connect("mongodb://127.0.0.1:27017/task-manager", {
 });
 
 
-const User = mongoose.model('woong',{
+const User = mongoose.model('task',{
   name : {
-    type : String
+    type : String,
+    // 중복 방지, 중복되면 save에러 
+    //unique : true
   },
   age : {
     type : Number
@@ -25,7 +24,7 @@ const User = mongoose.model('woong',{
 })
 
 const me  = new User({
-  name : 'tatddi',
+  name : 'tani',
   age : 500
 })
 
@@ -35,5 +34,10 @@ me.save().then( () => {
 }).catch((err)=>{
   console.log('Save Error : ', err)
 })
+ 
 
-// node src/db/mongoose.js
+// 실행 명령어 : node src/db/mongoose.js
+
+
+
+
