@@ -1,18 +1,39 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/task-manager-api', {
-    // useNewUrlParser : true,
-    // useCreateIndex : true
+
+// mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
+  
+
+mongoose.connect("mongodb://127.0.0.1:27017/task-manager", {
+  useNewUrlParser: true,
+  //deprecated
+  // useCreateIndex: true, 
+}).then(() => {
+  console.log("Connected to MongoDB");
+}).catch((err) => {
+  console.log(err);
 });
 
-const Cat = mongoose.model("User", {
-  name: {
-        type : String
-  },age :{
-      Type : Number
+
+const User = mongoose.model('woong',{
+  name : {
+    type : String
+  },
+  age : {
+    type : Number
   }
 })
 
-const kitty = new Cat({ name: 'Zildjian' });
-kitty.save().then(() => console.log('meow'));
+const me  = new User({
+  name : 'tatddi',
+  age : 500
+})
 
+
+me.save().then( () => {
+  console.log(me)
+}).catch((err)=>{
+  console.log('Save Error : ', err)
+})
+
+// node src/db/mongoose.js

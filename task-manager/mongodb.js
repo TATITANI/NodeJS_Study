@@ -25,6 +25,13 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
   const db = client.db(databaseName)
 
 
+  //컬렉션이란 용도가 같거나 유사한 문서들을 그룹으로 묶은 것.
+ db.collection('woong').insertOne({
+  name : 'tati',
+  age : 400
+ })
+//  db.collection('woong').deleteOne({name : 'tati'})
+
  const updatePromise = db.collection("users").updateOne(
    { _id: new ObjectId("6211253763e782534f11dcb6") },
    {
@@ -39,6 +46,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
      }
    }
  )
+
 
  db.collection('users').deleteMany({
    'name' : 'wowow2'
@@ -88,4 +96,5 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
   //   }
   // ) 
 
-  })
+  }
+ )
