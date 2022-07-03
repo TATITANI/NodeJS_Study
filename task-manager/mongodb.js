@@ -2,7 +2,7 @@
 
 // todo :  CRUD 구현
 
-const {MongoClient, ObjectID, ObjectId} = require('mongodb')
+const {MongoClient, ObjectId} = require('mongodb')
 
 const connectionURL = "mongodb://127.0.0.1"
 const databaseName = "task-manager"
