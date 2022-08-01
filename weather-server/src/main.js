@@ -43,9 +43,10 @@ app.get("", (req, res) => {
 app.post("", (req,res)=>{
   const postData = req.body
   weather.GetWeather(postData.address, postData.lat, postData.long)
-  .then((weatherData) =>{1
+  .then((weatherData) =>{
     console.log('post weatherData : ', weatherData)
     res.send(weatherData)
+    
   })
   .catch((result) =>{
     console.log('post error : ', result)

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator')
 
-
-const User = mongoose.model('task', {
+// 첫번째 파라미터 : 콜렉션 이름
+const User = mongoose.model('user', {
     name: {
         type: String,
         // 중복 방지, 중복되면 save에러 
@@ -14,7 +14,7 @@ const User = mongoose.model('task', {
         validate(value) {
             if (value < 0) {
                 throw new Error('age must be a positive number')
-            }
+            } 
         }
     },
     email: {
