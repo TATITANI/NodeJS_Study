@@ -30,6 +30,72 @@ app.post('/user', async (req, res) => {
     //     res.status(400).send(err)
     // })
 })
+app.get('/user', async (req, res) => {
+    // 모든 document 조회
+    try{
+        const users = await User.find({})
+        res.send(users)
+    }catch(err){
+        res.status(500).send(err)
+    }
+})
+
+app.get('/user/:id', async (req, res) => {
+    const _id = req.params.id
+    
+    const user = await User.findById((_id))
+    try{
+        if(!user){
+            return res.status(400).send()
+        }
+        res.send(user)
+    }catch(e){
+        res.status(500).send(e)
+    }
+
+    console.log(req.params)
+    
+})
+
+app.patch('/user/:id', async (req, res) =>{
+    const updates = Object.keys(req.body)
+    console.log(`keys : ${updates}`) // 리퀘스트의 키값
+
+    const allowedUpdates = ['name' ,'email', 'password', 'age']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+    if(!isValidOperation){
+        return res.status(400).send({error : 'invalid key'})
+    }
+    
+    try{
+        // new : ture => 변경한 데이터 반환
+        // runValidators : 스키마에 정의한 validation 동작
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, {new : true, runValidators :true})
+        if(!user){
+            return res.status(404).send()
+        }
+        res.send(user)
+
+    }catch(e){
+        res.status(400).send(e)
+    }
+})
+
+app.delete('/user/:id', async (req,res)=>{
+    
+    try{
+        const user = await User.findByIdAndDelete(req.params.id)
+        if(!user){
+            return res.status(404).send()
+        }
+        res.send(user)
+
+    }catch(e){
+        res.status(500).send(e)
+    }
+})
+
+
 
 app.post('/tasks', async (req,res) =>{
     const task = new Task(req.body)
@@ -93,57 +159,19 @@ app.patch('/tasks/:id', async (req, res) => {
 
 })
 
-app.get('/user', async (req, res) => {
-    // 모든 document 조회
-    try{
-        const users = await User.find({})
-        res.send(users)
-    }catch(err){
-        res.status(500).send(err)
-    }
-})
 
-app.get('/user/:id', async (req, res) => {
-    const _id = req.params.id
-    
-    const user = await User.findById((_id))
+app.delete('/tasks/:id', async (req, res)=>{
     try{
-        if(!user){
-            return res.status(400).send()
+        const task = await Task.findByIdAndDelete(req.params.id)
+        if(!task){
+            return res.status(404).send()
         }
-        res.send(user)
+        res.send(task)
+
     }catch(e){
         res.status(500).send(e)
     }
-
-    console.log(req.params)
-    
 })
-
-app.patch('/user/:id', async (req, res) =>{
-    const updates = Object.keys(req.body)
-    console.log(`keys : ${updates}`) // 리퀘스트의 키값
-
-    const allowedUpdates = ['name' ,'email', 'password', 'age']
-    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
-    if(!isValidOperation){
-        return res.status(400).send({error : 'invalid key'})
-    }
-    
-    try{
-        // new : ture => 변경한 데이터 반환
-        // runValidators : 스키마에 정의한 validation 동작
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, {new : true, runValidators :true})
-        if(!user){
-            return res.status(404).send()
-        }
-        res.send(user)
-
-    }catch(e){
-        res.status(400).send(e)
-    }
-})
-
 
 
 app.listen(port, () => {
