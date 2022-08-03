@@ -20,6 +20,9 @@ const userScehema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, "메일 입력하세요"],
+        unique: true,
+        trim : true,
+        lowercase : true,
         validate(value) {
             if (!validator.isEmail(value)) {
                 throw new Error('Email is Invalid')
@@ -39,6 +42,22 @@ const userScehema = new mongoose.Schema({
     }
 })
 
+userScehema.statics.findByCredentfials = async (email, password)=>{
+    const user = await User.findOne({email})
+    if(!user){
+        throw new Error('Unable to login')
+    }
+    const isMatch = await bCrypt.compare(password, user.password)
+
+    if(!isMatch){
+        throw new Error('Unable to login')
+    }
+
+    return user
+    
+} 
+
+// hash the password
 userScehema.pre('save', async function (next)  {
     const user = this
     if(user.isModified('password')){

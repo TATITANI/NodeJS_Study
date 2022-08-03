@@ -8,11 +8,10 @@ router.post('/user', async (req, res) => {
     console.log(`post호출 : ${JSON.stringify(req.body)}`)
 
     const user = new User(req.body)
-    
     try{
         await user.save()
         res.send(user)
-    } catch(e){
+    } catch(err){
         res.status(400).send(err)
     }
     
@@ -23,6 +22,16 @@ router.post('/user', async (req, res) => {
     //     res.status(400).send(err)
     // })
 })
+
+router.post('/user/login', async (req, res) =>{
+    try{
+        const user = await User.findByCredentfials(req.body.email, req.body.password)
+        res.send(user)
+    }catch(e){
+        res.status(400).send()
+    }
+})
+
 router.get('/user', async (req, res) => {
     // 모든 document 조회
     try{
