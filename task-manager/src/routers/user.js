@@ -9,8 +9,10 @@ router.post('/user', async (req, res) => {
 
     const user = new User(req.body)
     try{
-        await user.save()
-        res.send(user)
+        await user.save() 
+        token = user.generateAutoToken()
+
+        res.send({user, token})
     } catch(err){
         res.status(400).send(err)
     }
@@ -23,10 +25,11 @@ router.post('/user', async (req, res) => {
     // })
 })
 
-router.post('/user/login', async (req, res) =>{
+router.post('/user/login', async (req, res) =>{ 
     try{
         const user = await User.findByCredentfials(req.body.email, req.body.password)
-        res.send(user)
+        const token = await user.generateAutoToken()
+        res.send({user, token})
     }catch(e){
         res.status(400).send()
     }

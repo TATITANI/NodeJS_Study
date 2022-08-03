@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator')
 const bCrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const userScehema = new mongoose.Schema({
     name: {
@@ -39,7 +40,13 @@ const userScehema = new mongoose.Schema({
                 throw new Error('Password cannot contain "password" ')
             }
         }
-    }
+    },
+    tokens: [{
+        token: {
+            type : String,
+            required : true
+        }
+    }]
 })
 
 userScehema.statics.findByCredentfials = async (email, password)=>{
@@ -54,8 +61,20 @@ userScehema.statics.findByCredentfials = async (email, password)=>{
     }
 
     return user
-    
 } 
+
+// NOTE : statics는 모델에서 접근가능하고, methods는 인스턴스에서 접근가능하다.
+userScehema.methods.generateAutoToken = async function (){
+    const user = this
+    const token = jwt.sign({"_id" : user._id.toString()}, "thisismynewcourse")
+
+    user.tokens = user.tokens.concat({token})
+    await user.save()
+
+
+    return token
+    
+}
 
 // hash the password
 userScehema.pre('save', async function (next)  {
