@@ -48,9 +48,13 @@ router.patch('/tasks/:id', async (req, res) => {
     }
     
     try{
+        const task = await Task.findById(req.params.id)
+        updates.forEach((update)=> task[update] = req.body[update])
+        await task.save()
+
         // new : ture => 변경한 데이터 반환
         // runValidators : 스키마에 정의한 validation 동작
-        const task = await Task.findByIdAndUpdate(req.params.id, req.body, {new : true, runValidators :true})
+        // // const task = await Task.findByIdAndUpdate(req.params.id, req.body, {new : true, runValidators :true})
 
         if(!task){
             return res.status(404).send()
