@@ -1,6 +1,6 @@
 const express = require('express')
 const User = require('../models/user')
-
+const auth = require('../middleware/auth')
 const router = new express.Router()
  
 router.post('/user', async (req, res) => {
@@ -25,9 +25,11 @@ router.post('/user', async (req, res) => {
     // })
 })
 
+// 비번 : red12345!
 router.post('/user/login', async (req, res) =>{ 
+
     try{
-        const user = await User.findByCredentfials(req.body.email, req.body.password)
+        const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAutoToken()
         res.send({user, token})
     }catch(e){
@@ -35,14 +37,17 @@ router.post('/user/login', async (req, res) =>{
     }
 })
 
-router.get('/user', async (req, res) => {
-    // 모든 document 조회
-    try{
-        const users = await User.find({})
-        res.send(users)
-    }catch(err){
-        res.status(500).send(err)
-    }
+// parameter : request 경로 -> middleware(auth) -> route handler 
+router.get('/user/me',auth, async (req, res) => {
+    res.send(req.user)
+
+    // // 모든 document 조회
+    // try{
+    //     const users = await User.find({})
+    //     res.send(users)
+    // }catch(err){
+    //     res.status(500).send(err)
+    // }
 })
 
 router.get('/user/:id', async (req, res) => {
@@ -107,3 +112,4 @@ router.delete('/user/:id', async (req,res)=>{
 })
 
 module.exports = router
+

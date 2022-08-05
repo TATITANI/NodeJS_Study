@@ -49,7 +49,7 @@ const userScehema = new mongoose.Schema({
     }]
 })
 
-userScehema.statics.findByCredentfials = async (email, password)=>{
+userScehema.statics.findByCredentials = async (email, password)=>{
     const user = await User.findOne({email})
     if(!user){
         throw new Error('Unable to login')
@@ -67,7 +67,7 @@ userScehema.statics.findByCredentfials = async (email, password)=>{
 userScehema.methods.generateAutoToken = async function (){
     const user = this
     const token = jwt.sign({"_id" : user._id.toString()}, "thisismynewcourse")
-
+    console.log(`generated Token : ${token}`)
     user.tokens = user.tokens.concat({token})
     await user.save()
 
