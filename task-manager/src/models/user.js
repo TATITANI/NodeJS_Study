@@ -49,6 +49,16 @@ const userScehema = new mongoose.Schema({
     }]
 })
 
+// virtual model: collection에 정의 되지 않은 filed 이지만 정의된 field 처럼 사용 
+// ref : 참고할 collection 
+// localField : 현재 스키마 (collection)에서 연결할 필드
+// foreignField : 참고할 collection 중 localField와 연결할 필드 
+userScehema.virtual(`tasks`, {
+    ref: `Task`,
+    localField : `_id`, 
+    foreignField: 'owner'
+})
+
 userScehema.statics.findByCredentials = async (email, password)=>{
     const user = await User.findOne({email})
     if(!user){

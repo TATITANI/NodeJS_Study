@@ -26,7 +26,7 @@ router.post('/user/login', async (req, res) =>{
         const token = await user.generateAutoToken()
         res.send({user, token})
     }catch(e){
-        res.status(400).send()
+        res.status(400).send(e)
     }
 
 })
