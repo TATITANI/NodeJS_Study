@@ -75,6 +75,16 @@ userScehema.methods.generateAutoToken = async function (){
     return token   
 }
 
+userScehema.methods.toJSON = function() {
+    const user = this;
+    const userObject = user.toObject()
+    
+    delete userObject.password
+    delete userObject.tokens
+
+    return userObject
+}
+
 // hash the passwordm
 userScehema.pre('save', async function (next)  {
     const user = this

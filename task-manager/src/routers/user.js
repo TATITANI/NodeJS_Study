@@ -12,7 +12,7 @@ router.post('/user', async (req, res) => {
         await user.save() 
         token = user.generateAutoToken()
 
-        res.send({user, token})
+        res.status(201).send({user, token})
     } catch(err){
         res.status(400).send(err)
     }
