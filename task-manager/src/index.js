@@ -18,16 +18,7 @@ app.listen(port, () => {
     console.log(`Server is up on port ${port}`)
 })
 
-const jwt = require('jsonwebtoken')
-const myFunction = async() =>{
-    const token = jwt.sign({_id : 'abc123'},'thisismynewcourse', {expiresIn : '7 days'})
-    console.log(token)
 
-    const data = jwt.verify(token, 'thisismynewcourse')
-    console.log(data)
-}
-
-myFunction()
 
 // MongoDB 실행 : D:/mongodb/bin/mongod.exe --dbpath=D:/mongodb-data
 //실행 명령어 : nodemon src/index.js 
