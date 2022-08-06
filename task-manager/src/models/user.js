@@ -66,17 +66,16 @@ userScehema.statics.findByCredentials = async (email, password)=>{
 // NOTE : statics는 모델에서 접근가능하고, methods는 인스턴스에서 접근가능하다.
 userScehema.methods.generateAutoToken = async function (){
     const user = this
+    //payload, secretkey
     const token = jwt.sign({"_id" : user._id.toString()}, "thisismynewcourse")
     console.log(`generated Token : ${token}`)
     user.tokens = user.tokens.concat({token})
     await user.save()
 
-
-    return token
-    
+    return token   
 }
 
-// hash the password
+// hash the passwordm
 userScehema.pre('save', async function (next)  {
     const user = this
     if(user.isModified('password')){

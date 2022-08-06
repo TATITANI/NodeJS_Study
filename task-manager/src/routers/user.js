@@ -17,17 +17,10 @@ router.post('/user', async (req, res) => {
         res.status(400).send(err)
     }
     
-    // user.save().then(() => {
-    //     res.send(user)
-    //     console.log("응답 성공")
-    // }).catch((err)=>{
-    //     res.status(400).send(err)
-    // })
 })
 
 // 비번 : red12345!
 router.post('/user/login', async (req, res) =>{ 
-
     try{
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAutoToken()
@@ -35,12 +28,37 @@ router.post('/user/login', async (req, res) =>{
     }catch(e){
         res.status(400).send()
     }
+
+})
+
+router.post('/user/logout', auth, async (req,res)=>{
+    try{
+        req.user.tokens = req.user.tokens.filter((token)=>{
+            return token.token !== req.token
+        })
+        await req.user.save()
+
+        res.send()
+    }catch(e){
+        res.status(500).send()
+    }
+})
+
+router.post(`/user/logoutAll`, auth, async (req, res) => {
+    try {
+        req.user.tokens = []
+        await req.user.save()
+
+        res.status(200).send()
+    } catch (e) {
+        res.status(500).send()
+    }
 })
 
 // parameter : request 경로 -> middleware(auth) -> route handler 
 router.get('/user/me',auth, async (req, res) => {
     res.send(req.user)
-
+    
     // // 모든 document 조회
     // try{
     //     const users = await User.find({})
