@@ -48,6 +48,8 @@ const userScehema = new mongoose.Schema({
             required : true
         }
     }]
+},{
+    timestamps : true
 })
 
 // virtual model: collection에 정의 되지 않은 filed 이지만 정의된 field 처럼 사용 
