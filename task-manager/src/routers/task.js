@@ -19,17 +19,32 @@ router.post('/tasks', auth, async (req,res) =>{
     }
 })
 
+// GET /tasks?completed=true
+// GET /tasks?limit=10&skip=20
+// GET /tasks?sortBy=createdAt:desc
+
 router.get('/tasks', auth, async (req,res) =>{
     
     const match= {}
+    const sort={}
     if(req.query.completed){
         match.completed = req.query.completed === 'true'
+    }
+    if(req.query.sortBy){
+       const parts = req.query.sortBy.split(':')
+        // -1 : 내림차순, 1: 오름차순
+       sort[parts[0]] = (parts[1]==='desc') ? -1 : 1
     }
 
     try{
         const user = await req.user.populate({
             path : 'tasks',
-            match
+            match,
+            options : {
+                limit : parseInt(req.query.limit), // 데이터 검색량 제한
+                skip : parseInt(req.query.skip), // 건너뛸 문서의 수
+                sort,
+            }
         })
         res.send(user.tasks)
 
