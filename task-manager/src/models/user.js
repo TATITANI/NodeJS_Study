@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator')
 const bCrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const Task = require('./task')
 
 const userScehema = new mongoose.Schema({
     name: {
@@ -55,7 +56,7 @@ const userScehema = new mongoose.Schema({
 // foreignField : 참고할 collection 중 localField와 연결할 필드 
 userScehema.virtual(`tasks`, {
     ref: `Task`,
-    localField : `_id`, 
+    localField : '_id', 
     foreignField: 'owner'
 })
 
@@ -101,6 +102,14 @@ userScehema.pre('save', async function (next)  {
     if(user.isModified('password')){
         user.password = await bCrypt.hash(user.password, 8)
     }
+    next()
+})
+
+
+// delete user tasks when user is removed
+userScehema.pre('remove', async function (next)  {
+    const user = this
+    await Task.deleteMany({owner : user._id})
     next()
 })
 

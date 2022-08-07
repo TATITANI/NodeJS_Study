@@ -13,7 +13,7 @@ const Task = mongoose.model('Task', {
   owner :{
     type : mongoose.Schema.Types.ObjectId,
     required: true,
-    ref : 'user' // 참조할 몽구스 모델명 
+    ref : 'user' // 참조할 몽구스 모델(컬렉션)명 
   }
 })
 
