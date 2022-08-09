@@ -3,6 +3,8 @@ const User = require('../models/user')
 const auth = require('../middleware/auth')
 const router = new express.Router()
  
+const multer = require('multer')
+
 router.post('/user', async (req, res) => {
     
     console.log(`post호출 : ${JSON.stringify(req.body)}`)
@@ -55,11 +57,33 @@ router.post(`/user/logoutAll`, auth, async (req, res) => {
     }
 })
 
+const upload = multer({
+    dest : 'avatars',
+    limits :{
+        fileSize : 1000000
+    },
+    fileFilter(req, file, cb){
+        // 정규표현식 : /내용/ 의 형식. $는 텍스트의 끝을 의미
+        if( !file.originalname.match(/\.(jpg|jepg|png)$/)){
+            return cb(new Error("Please Upload jpg, jpeg, png"))
+        }
+        cb(undefined, true)
+    }
+})
+
+
+router.post('/users/me/avatar', upload.single('avatar'), async(req, res) =>{
+    res.send()
+    
+})
+
+
 // parameter : request 경로 -> middleware(auth) -> route handler 
 router.get('/user/me',auth, async (req, res) => {
     res.send(req.user)
     
 })
+
 
 
 router.patch('/user/me', auth, async (req, res) =>{
