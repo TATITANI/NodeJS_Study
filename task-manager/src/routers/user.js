@@ -58,7 +58,8 @@ router.post(`/user/logoutAll`, auth, async (req, res) => {
 })
 
 const upload = multer({
-    dest : 'avatars',
+    // 주의 : dest(저장경로)옵션을 생략해야 파일이 디스크가 아닌 메모리에 저장됨.
+    // dest : 'avatars',
     limits :{
         fileSize : 1000000
     },
@@ -69,13 +70,16 @@ const upload = multer({
         }
         cb(undefined, true)
     }
-})
+}) 
 
-
-router.post('/users/me/avatar', upload.single('avatar'), async(req, res) =>{
+router.post('/user/me/avatar',auth, upload.single('avatar'),  async(req, res) =>{
+    req.user.avatar = req.file.buffer
+    await req.user.save()
     res.send()
-    
+}, (err, req, res, next) =>{
+    res.status(400).send({error: err.message})
 })
+
 
 
 // parameter : request 경로 -> middleware(auth) -> route handler 
@@ -125,6 +129,15 @@ router.delete('/user/me', auth, async (req,res)=>{
     }catch(e){
         res.status(500).send(e)
     }
+})
+
+router.delete('/user/me/avatar', auth, async (req,res)=>{
+    req.user.avatar = undefined
+    await req.user.save()
+    res.status(200).send()
+
+}, (err, req, res, next)=>{
+    res.status(404).send({error: err.message})
 })
 
 module.exports = router
