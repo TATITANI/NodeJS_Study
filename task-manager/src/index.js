@@ -8,32 +8,6 @@ const TaskRouter = require('./routers/task')
 const app = express()
 const port = process.env.PORT || 3000
 
-
-const multer = require('multer')
-const upload = multer({
-    dest : 'images',
-    // 파일 크기 제한
-    limits : {
-        fileSize: 1000000, //바이트
-    },
-    fileFilter(req, file, cb){
-        // if (!file.originalname.endsWith('.pdf')) {
-        // / \.(doc|docx)$/   =>   정규표현식
-        if(!file.originalname.match(/ \.(doc|docx)$/)  ){
-            return cb(new Error('Please upload a Word document'))
-        }
-        cb(undefined, true)
-    }
-
-})
-
-app.post('/upload', upload.single('upload'), (req, res)=>{
-    res.send()
-})
-
-
-
-
 app.use(express.json())
 app.use(TaskRouter)
 app.use(UserRouter)
