@@ -84,7 +84,7 @@ userScehema.statics.findByCredentials = async (email, password)=>{
 userScehema.methods.generateAutoToken = async function (){
     const user = this
     //payload, secretkey
-    const token = jwt.sign({"_id" : user._id.toString()}, "thisismynewcourse")
+    const token = jwt.sign({"_id" : user._id.toString()}, process.env.JWT_SECRET)
     console.log(`generated Token : ${token}`)
     user.tokens = user.tokens.concat({token})
     await user.save()
