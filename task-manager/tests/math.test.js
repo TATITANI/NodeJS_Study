@@ -16,7 +16,7 @@ test("do multiply", () => {
 test('Aysnc test demo', (done) => {
     
     setTimeout(() => {
-        exepct(1).toBe(2)
+        expect(1).toBe(2)
         done()
     }, 2000);
 })

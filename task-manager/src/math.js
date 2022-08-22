@@ -8,7 +8,7 @@ const add = (a,b)=>{
                 return reject('add Error')
             }
             resolve(a+b)
-        }, 2000);
+        }, 1000);
     })
 }
 
