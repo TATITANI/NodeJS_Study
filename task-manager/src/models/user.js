@@ -21,7 +21,7 @@ const userScehema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: [true, "메일 입력하세요"],
+        required: [true, `메일 입력하세요`],
         unique: true,
         trim : true,
         lowercase : true,
@@ -33,7 +33,7 @@ const userScehema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, '비번 없음'],
+        required: [true, `비번 없음 `],
         minlength: 7,
         trim: true,
         validate(value) {
