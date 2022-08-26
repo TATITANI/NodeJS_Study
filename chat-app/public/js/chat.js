@@ -12,24 +12,40 @@ socket.on('msg', (msg)=>{
     console.log(`msg 수신 : ${msg}`)
 })
 
-document.getElementById('msg-form').addEventListener('submit', (event) =>{
+const $msgForm = document.getElementById('msg-form')
+const $input = document.getElementById('inputMsg')
+const $btn = document.getElementById('btnMsg')
+const $btnLocation = document.getElementById('send-location')
+
+$msgForm.addEventListener('submit', (event) =>{
     event.preventDefault() // submit 기본동작 차단
-    // 이름이 msg인 요소 값
-    const msg = event.target.elements.msg
-    SendMsg(document.getElementById('inputMsg').value)
+
+    $btn.setAttribute('disabled', 'disabled')
+    
+    // 이름이 inputMsg인 요소 값
+    // const msg = event.target.elements.inputMsg.value
+    const msg = $input.value
+
+    socket.emit('msg',  msg, ()=>{
+        $btn.removeAttribute('disabled', 'disabled')
+        $input.value =''
+        $input.focus()
+        console.log(`입력값 전송됨: ${msg}`)
+    })
+  
 })
 
-function SendMsg(msg) {
-    console.log(`msg 전송 : ${msg}`)
-    socket.emit('msg',  msg)
-}
 
 document.getElementById('send-location').addEventListener('click', () =>{
     if(!navigator.geolocation){
         return alert('geolocation is not suppoorted by your browser')
     }
-     navigator.geolocation.getCurrentPosition((pos)=>{
+    
+    $btnLocation.setAttribute('disabled', 'disabled')
+    navigator.geolocation.getCurrentPosition((pos) => {
         console.log(pos)
+        $btnLocation.removeAttribute('disabled', 'disabled')
+        
         socket.emit('sendLocation', {
             latitude : pos.coords.latitude,
             longitude : pos.coords.longitude

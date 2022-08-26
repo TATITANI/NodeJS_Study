@@ -31,10 +31,11 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('msg', 'a new user has joined')
     
     //수신
-    socket.on('msg', (msg) => {
+    socket.on('msg', (msg, callback) => {
         console.log(`msg 수신 : ${msg}`)
         //단일 커넥션에 전송
         io.emit('msg', msg)
+        callback()
  
         // 모든 커넥션에 전송
         // io.emit('countUpdated', count)
