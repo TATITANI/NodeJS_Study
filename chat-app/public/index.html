@@ -2,11 +2,22 @@
 
 <html>
     <head>
-        Chat App
+        <link rel="stylesheet" href="./css/index.css">
+        <p id = 'msg'> </p>
     </head>
     <body>
+
+        <form id='msg-form' action="/">
+            <input name="inputMsg" id = 'inputMsg' >
+            <button id = 'btnMsg'  type="submit"> </button>
+        </form>
+
+        <br> <br>
         <button id="increment"> +1 </button>
+
+
         <script src='/socket.io/socket.io.js'></script>
         <script src='/js/chat.js'></script>
+        
     </body>
 </html>  

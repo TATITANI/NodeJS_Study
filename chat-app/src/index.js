@@ -3,7 +3,7 @@ const http = require('http')
 const path = require("path")
 const socketio = require('socket.io')
 
-const app = express()
+const app = express() 
 const server = http.createServer(app)
 const io = socketio(server)
 
@@ -17,9 +17,17 @@ app.use(express.json())
 // => partial 사용 가능
 app.use(express.static(publicDirectoryPath))
 
+app.get('/', (req,res)=>{
+    console.log(`query : ${JSON.stringify(req.query)}`)
+})
+
 count = 0
+
+
 io.on('connection', (socket) => {
     console.log("New Websocket connection")
+    
+    socket.emit('connect message', "welcome")
 
     //송신
     socket.emit('countUpdated',count)
@@ -28,10 +36,15 @@ io.on('connection', (socket) => {
         count++
 
         //단일 커넥션에 전송
-        // socket.emit('countUpdated', count)
+        socket.emit('countUpdated', count)
         // 모든 커넥션에 전송
-        io.emit('countUpdated', count)
+        // io.emit('countUpdated', count)
     })
+    socket.on('msg', (msg)=>{
+        console.log(`msg 수신 : ${msg}`)
+        io.emit('msg', msg)
+    })
+    
 })
 
 server.listen(port, () => {
