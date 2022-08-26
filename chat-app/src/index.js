@@ -21,28 +21,26 @@ app.get('/', (req,res)=>{
     console.log(`query : ${JSON.stringify(req.query)}`)
 })
 
-count = 0
-
 
 io.on('connection', (socket) => {
     console.log("New Websocket connection")
     
     socket.emit('connect message', "welcome")
 
-    //송신
-    socket.emit('countUpdated',count)
+    //자신을 제외하고 전송
+    socket.broadcast.emit('msg', 'a new user has joined')
+    
     //수신
-    socket.on('increment', () =>{
-        count++
-
+    socket.on('msg', (msg) => {
+        console.log(`msg 수신 : ${msg}`)
         //단일 커넥션에 전송
-        socket.emit('countUpdated', count)
+        io.emit('msg', msg)
+ 
         // 모든 커넥션에 전송
         // io.emit('countUpdated', count)
     })
-    socket.on('msg', (msg)=>{
-        console.log(`msg 수신 : ${msg}`)
-        io.emit('msg', msg)
+    socket.on('sendLocation', (pos) => {
+        io.emit('msg', `pos : ${pos.latitude} , ${pos.longitude} `)
     })
     
 })

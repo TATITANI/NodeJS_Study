@@ -24,7 +24,22 @@ function SendMsg(msg) {
     socket.emit('msg',  msg)
 }
 
-document.querySelector('#increment').addEventListener('click', () =>{
-    console.log('click')
-    socket.emit('increment')
+document.getElementById('send-location').addEventListener('click', () =>{
+    if(!navigator.geolocation){
+        return alert('geolocation is not suppoorted by your browser')
+    }
+     navigator.geolocation.getCurrentPosition((pos)=>{
+        console.log(pos)
+        socket.emit('sendLocation', {
+            latitude : pos.coords.latitude,
+            longitude : pos.coords.longitude
+        })
+     })
 })
+
+
+// document.querySelector('#increment').addEventListener('click', () =>{
+//     console.log('click')
+//     socket.emit('increment')
+// })
+
