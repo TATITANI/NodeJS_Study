@@ -4,7 +4,8 @@ const $msgForm = document.getElementById('msg-form')
 const $input = document.getElementById('inputMsg')
 const $btn = document.getElementById('btnMsg')
 const $btnLocation = document.getElementById('send-location')
-const $msg = document.getElementById('msg')
+const $msg = document.getElementById('title')
+const $box = document.getElementById('box')
 const $messageTempalte = document.getElementById('message-template').innerHTML
 const $locationMsgTempalte = document.getElementById('locationMsg-template').innerHTML
 
@@ -14,24 +15,26 @@ socket.on('countUpdated', (count) => {
 })
 
 socket.on("connect message", (msg) => {
-    document.getElementById('msg').innerText = msg
+    document.getElementById('title').innerText = msg
 })
 
 socket.on('msg', (msg)=>{
     console.log(`msg 수신 : ${msg}`)
     const html = Mustache.render($messageTempalte, {
-        msg
+        msg,
+        userName : 'woong'
     })
     // beforeend : element 안에 가장 마지막 child
-    $msg.insertAdjacentHTML('beforeend', html)
+    $box.insertAdjacentHTML('beforeend', html)
 
 })
 socket.on('locationMsg', (url)=>{
     console.log("?? ", url)
     const html = Mustache.render($locationMsgTempalte, {
-        url
+        url,
+        userName : 'woong'
     })
-    $msg.insertAdjacentHTML('beforeend', html)
+    $box.insertAdjacentHTML('beforeend', html)
 })
 
 $msgForm.addEventListener('submit', (event) =>{

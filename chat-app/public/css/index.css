@@ -1,6 +1,42 @@
+#box{
+    border: 1px black solid;
+    background-color: darkgray;
+    width: 500px;
+    height: 600px;
+}
+
+
+.input{
+    position: relative;
+    top : 10px;
+} 
+
+#inputMsg{
+    width: 430px;
+    height: 30px;
+}
+
 #btnMsg{
     position: relative;
-    top: 4px;
-    width: 22px;
-    height: 22px;
+    width: 60px;
+    top : 2px;
+    height: 35px;
+    background-color: blueviolet;
+    color: white;
+}
+
+#send-location{
+    position: relative;
+    top : 10px;
+}
+
+
+.userName{
+    font-size: x-small;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.msg{
+    font-size: medium;
 }

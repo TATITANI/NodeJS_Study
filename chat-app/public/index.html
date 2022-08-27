@@ -4,30 +4,41 @@
 
 <head>
     <link rel="stylesheet" href="./css/index.css">
-    <p id='msg'> </p>
+    <p id='title'> </p>
 </head>
 
 <body>
-
-    <form id='msg-form' action="/">
-        <input name="inputMsg" id='inputMsg'>
-        <button id='btnMsg' type="submit"> </button>
-    </form>
+    <div id = 'box'>
+    </div>
+    
+    <div class = 'input'>
+        <form id='msg-form' action="/">
+            <input name="inputMsg" id='inputMsg' placeholder="메시지">
+            <button id='btnMsg' type="submit"> 보내기 </button>
+        </form>
+        <button id='send-location'>send location</button>
+    </div>
 
     <br> <br>
-    <button id='send-location'>send location</button>
-
 
     <script id='locationMsg-template' type='text/html'>
         <div>
-            <!-- target="_blank" : 새탭에서 열기 -->
-            <p> <a href="{{url}}" target="_blank"> 내 위치 </a></p>
+            <p>
+                <span class="userName">{{userName}}</span>
+                <br>
+                <!-- target="_blank" : 새탭에서 열기 -->
+                <span> <a href="{{url}}" target="_blank"> 내 위치 </a> </span>
+            </p>
         </div>
     </script>
 
     <script id='message-template' type='text/html'>
         <div>
-            <p> {{msg}}</p>
+            <p> 
+            <span class="userName">{{userName}}</span>
+            <br>
+            <span class = "msg"> {{msg}}</span> 
+            </p>
         </div>
     </script>
 

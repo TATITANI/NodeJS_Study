@@ -25,7 +25,7 @@ app.get('/', (req,res)=>{
 io.on('connection', (socket) => {
     console.log("New Websocket connection")
     
-    socket.emit('connect message', "welcome")
+    socket.emit('connect message', "채팅방")
 
     //자신을 제외하고 전송
     socket.broadcast.emit('msg', 'a new user has joined')
