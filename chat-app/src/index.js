@@ -41,7 +41,8 @@ io.on('connection', (socket) => {
         // io.emit('countUpdated', count)
     })
     socket.on('sendLocation', (pos) => {
-        io.emit('msg', `pos : ${pos.latitude} , ${pos.longitude} `)
+        const url = `https://www.google.com/maps/place/${pos.latitude},${pos.longitude}`
+        io.emit('locationMsg', url)
     })
     
 })
@@ -50,4 +51,4 @@ server.listen(port, () => {
     console.log(`Server is up on port ${port}`)
 })
 
-//실행 명령어 : nodemon src/index.js 
+//실행 명령어 : nodemon src/index.js    => npm run dev

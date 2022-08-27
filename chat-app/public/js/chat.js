@@ -25,10 +25,14 @@ socket.on('msg', (msg)=>{
     // beforeend : element 안에 가장 마지막 child
     $msg.insertAdjacentHTML('beforeend', html)
 
-const $msgForm = document.getElementById('msg-form')
-const $input = document.getElementById('inputMsg')
-const $btn = document.getElementById('btnMsg')
-const $btnLocation = document.getElementById('send-location')
+})
+socket.on('locationMsg', (url)=>{
+    console.log("?? ", url)
+    const html = Mustache.render($locationMsgTempalte, {
+        url
+    })
+    $msg.insertAdjacentHTML('beforeend', html)
+})
 
 $msgForm.addEventListener('submit', (event) =>{
     event.preventDefault() // submit 기본동작 차단
