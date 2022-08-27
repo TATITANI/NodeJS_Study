@@ -9,6 +9,11 @@ const $box = document.getElementById('box')
 const $messageTempalte = document.getElementById('message-template').innerHTML
 const $locationMsgTempalte = document.getElementById('locationMsg-template').innerHTML
 
+// var qs = require('querystring');
+const {id, room} = Qs.parse(location.search, {ignoreQueryPrefix : true})
+console.log(`흐음 : ${id}`)
+
+socket.emit('join', {id, room})
 
 socket.on('countUpdated', (count) => {
     console.log(`the count has been updated ${count}`)
@@ -72,10 +77,3 @@ document.getElementById('send-location').addEventListener('click', () =>{
         })
      })
 })
-
-
-// document.querySelector('#increment').addEventListener('click', () =>{
-//     console.log('click')
-//     socket.emit('increment')
-// })
-

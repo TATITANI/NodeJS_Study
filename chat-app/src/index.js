@@ -28,9 +28,15 @@ io.on('connection', (socket) => {
     socket.emit('connect message', "채팅방")
 
     //자신을 제외하고 전송
-    socket.broadcast.emit('msg', 'a new user has joined')
-    
+    // socket.broadcast.emit
     //수신
+    socket.on('join', ( {id, room} ) => {
+        socket.join(room)
+        socket.broadcast.to(room).emit("msg", `${id} 접속했습니다`)
+        socket.emit('msg', `환영!`)
+    })
+
+
     socket.on('msg', (msg, callback) => {
         console.log(`msg 수신 : ${msg}`)
         //단일 커넥션에 전송
