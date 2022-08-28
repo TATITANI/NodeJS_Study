@@ -2,6 +2,8 @@ const express = require('express')
 const http = require('http')
 const path = require("path")
 const socketio = require('socket.io')
+const { addUser, removeUser, getUser, getUsersInRoom } = require('./users.js')
+const { generateMessage, generateLocationMessage } = require('./messages')
 
 const app = express() 
 const server = http.createServer(app)
@@ -30,25 +32,30 @@ io.on('connection', (socket) => {
     //자신을 제외하고 전송
     // socket.broadcast.emit
     //수신
-    socket.on('join', ( {id, room} ) => {
+    socket.on('join', ( {userName, room} ) => {
         socket.join(room)
-        socket.broadcast.to(room).emit("msg", `${id} 접속했습니다`)
-        socket.emit('msg', `환영!`)
+        socket.broadcast.to(room).emit("msg", generateMessage('관리자', `${userName}가 접속했습니다`))
+        socket.emit('msg', generateMessage('괸리자', '환영!') )
+        // console.log(`userName : ${userName}`)
+
+        addUser( {id : socket.id , userName, room })
     })
 
 
-    socket.on('msg', (msg, callback) => {
-        console.log(`msg 수신 : ${msg}`)
+    socket.on('msg', ( msg, callback) => {
+        const user = getUser(socket.id)
         //단일 커넥션에 전송
-        io.emit('msg', msg)
+        io.emit('msg', generateMessage(user.userName , msg))
         callback()
  
         // 모든 커넥션에 전송
         // io.emit('countUpdated', count)
     })
+
     socket.on('sendLocation', (pos) => {
         const url = `https://www.google.com/maps/place/${pos.latitude},${pos.longitude}`
-        io.emit('locationMsg', url)
+        const userName = getUser(socket.id).userName
+        io.emit('locationMsg', generateLocationMessage(userName, url))
     })
     
 })
