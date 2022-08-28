@@ -11,7 +11,11 @@ const $locationMsgTempalte = document.getElementById('locationMsg-template').inn
 
 // var qs = require('querystring');
 const {id, room} = Qs.parse(location.search, {ignoreQueryPrefix : true})
-console.log(`흐음 : ${id}`)
+
+function autoScroll() {
+    $box.scrollTop = $box.scrollHeight
+}
+
 
 socket.emit('join', {id, room})
 
@@ -31,6 +35,7 @@ socket.on('msg', (msg)=>{
     })
     // beforeend : element 안에 가장 마지막 child
     $box.insertAdjacentHTML('beforeend', html)
+    autoScroll()
 
 })
 socket.on('locationMsg', (url)=>{
@@ -40,6 +45,7 @@ socket.on('locationMsg', (url)=>{
         userName : 'woong'
     })
     $box.insertAdjacentHTML('beforeend', html)
+    autoScroll()
 })
 
 $msgForm.addEventListener('submit', (event) =>{
